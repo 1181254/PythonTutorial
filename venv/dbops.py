@@ -15,17 +15,22 @@ class Employee:
 e1 = Employee("Geroge",35)
 e1.showEmployee()
 
-db = pymysql.connect("localhost","root","","auribises")
+print e1.name,e1.age
+
+db = pymysql.connect("localhost","root","","auribises" )
 
 cursor = db.cursor()
-#cursor.execute("SELECT VERSION()")
-cursor.execute("insert into Employee values(null,'Harry',37)")
-#cursor.execute("SELECT * from Employee")
-#data = cursor.fetchone()
 
-cursor.close()
+sqlQuery = """INSERT INTO Employee(EID,
+         ENAME, EAGE )
+         VALUES (null, 'Jack', 27)"""
 
-#print data
+#Transaction
+try:
+   cursor.execute(sqlQuery)
+   db.commit()
+except:
+   db.rollback()
 
 db.close()
 
